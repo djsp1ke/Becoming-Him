@@ -11,28 +11,67 @@ type PostData = {
 };
 
 function parseMarkdown(markdown: string) {
+  // Split into blocks but preserve single line breaks for formatting
   const blocks = markdown.trim().split(/\r?\n\r?\n/);
+
   return blocks
     .map((block) => {
+      // Handle horizontal rules
+      if (/^---+$/.test(block.trim())) {
+        return '<hr>';
+      }
+
+      // Handle blockquotes
+      if (block.trim().startsWith('>')) {
+        const quoteContent = block
+          .split('\n')
+          .map(line => line.replace(/^>\s?/, ''))
+          .join('\n')
+          .trim();
+        return `<blockquote>${parseInlineMarkdown(quoteContent)}</blockquote>`;
+      }
+
+      // Handle headings
       const headingMatch = block.match(/^(#{1,6})\s+(.*)$/m);
       if (headingMatch) {
         const level = headingMatch[1].length;
-        return `<h${level}>${headingMatch[2].trim()}</h${level}>`;
+        const content = parseInlineMarkdown(headingMatch[2].trim());
+        return `<h${level}>${content}</h${level}>`;
       }
 
+      // Handle lists
       if (/^\s*-\s+/m.test(block)) {
         const items = block
           .split(/\r?\n/)
           .filter((line) => /^\s*-\s+/.test(line))
-          .map((line) => `<li>${line.replace(/^\s*-\s+/, '').trim()}</li>`) 
+          .map((line) => {
+            const content = parseInlineMarkdown(line.replace(/^\s*-\s+/, '').trim());
+            return `<li>${content}</li>`;
+          })
           .join('');
         return `<ul>${items}</ul>`;
       }
 
-      const paragraph = block.replace(/\r?\n/g, ' ').trim();
-      return `<p>${paragraph}</p>`;
+      // Handle regular paragraphs
+      const paragraph = block.trim();
+      if (paragraph) {
+        return `<p>${parseInlineMarkdown(paragraph)}</p>`;
+      }
+
+      return '';
     })
     .join('');
+}
+
+function parseInlineMarkdown(text: string): string {
+  return text
+    // Bold
+    .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+    // Italic
+    .replace(/\*(.*?)\*/g, '<em>$1</em>')
+    // Escape HTML
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;');
 }
 
 function getPostData(slug: string): PostData | null {
