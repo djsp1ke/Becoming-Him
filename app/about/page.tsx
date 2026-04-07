@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import FileUpload from './FileUpload';
 
 const aboutImages = [
   '/images/james3.png',
@@ -48,6 +49,9 @@ export default function About() {
           I'm not here to perform a recovery story. I'm here because I got tired of waiting to be saved. Nobody's coming. Not Clark Kent. Not Peter Parker. Just you, in the mirror, every single morning.
         </p>
         <p className="text-sm text-slate-700 leading-relaxed mb-4">
+          The journey continues. Every day is a choice. Every choice defines who I become.
+        </p>
+        <p className="text-sm text-slate-700 leading-relaxed mb-4">
           So that's what I'm doing. Showing up. Working through it. Building something harder than I've ever built before — myself.
         </p>
         <p className="text-sm text-slate-700 leading-relaxed mb-4">
@@ -65,6 +69,15 @@ export default function About() {
         <p className="text-sm text-slate-700 leading-relaxed">
           This site is where I share what works, what doesn't and how I'm staying disciplined without pretending it is easy.
         </p>
+      </section>
+
+      <section className="max-w-3xl mt-8 bg-white border border-slate-200 rounded-3xl p-8 shadow-sm">
+        <p className="text-xs tracking-widest text-slate-500 font-medium uppercase mb-4">Share your story</p>
+        <h2 className="text-2xl font-bold mb-4 text-[#111111]">Upload a photo or file</h2>
+        <p className="text-sm text-slate-600 mb-6">
+          Share images, documents, or other files related to your journey. Files are uploaded to the site's media library.
+        </p>
+        <FileUpload />
       </section>
     </main>
   );
