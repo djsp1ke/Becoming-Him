@@ -1,0 +1,36 @@
+backend:
+  name: git-gateway
+  branch: main
+
+media_folder: public/images
+public_folder: /images
+
+collections:
+
+  - name: homepage
+    label: Homepage
+    files:
+      - label: Homepage content
+        name: content
+        file: content/homepage.json
+        fields:
+          - { label: Hero headline, name: headline, widget: string }
+          - { label: Tagline, name: tagline, widget: text }
+          - { label: My story, name: story, widget: text }
+          - label: Content pillars
+            name: pillars
+            widget: list
+            fields:
+              - { label: Title, name: title, widget: string }
+              - { label: Body, name: body, widget: text }
+
+  - name: posts
+    label: Journal posts
+    folder: content/posts
+    create: true
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    fields:
+      - { label: Title, name: title, widget: string }
+      - { label: Date, name: date, widget: datetime }
+      - { label: Summary, name: summary, widget: text }
+      - { label: Body, name: body, widget: markdown }
