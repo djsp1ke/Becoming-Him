@@ -52,6 +52,15 @@ export default function Home() {
       <hr className="border-slate-200 mx-5" />
 
       <section className="px-5 pt-12 pb-10">
+        <div className="mb-8">
+          <Image
+            src="/images/untitled-design-3-.png"
+            alt="Hero image"
+            width={800}
+            height={400}
+            className="w-full h-auto rounded-lg shadow-lg"
+          />
+        </div>
         <p className="text-xs tracking-widest text-slate-500 font-medium mb-3 uppercase">James Gaunt</p>
         <h1 className="text-4xl font-bold leading-tight mb-4 text-[#111111]">
           {content.headline.split('in public.')[0]}

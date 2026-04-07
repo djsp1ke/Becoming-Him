@@ -63,15 +63,23 @@ function parseMarkdown(markdown: string) {
     .join('');
 }
 
-function parseInlineMarkdown(text: string): string {
+function escapeHtml(text: string): string {
   return text
-    // Bold
-    .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
-    // Italic
-    .replace(/\*(.*?)\*/g, '<em>$1</em>')
-    // Escape HTML
+    .replace(/&/g, '&amp;')
     .replace(/</g, '&lt;')
     .replace(/>/g, '&gt;');
+}
+
+function parseInlineMarkdown(text: string): string {
+  const escaped = escapeHtml(text);
+
+  return escaped
+    // Inline code
+    .replace(/`([^`]+?)`/g, '<code>$1</code>')
+    // Bold
+    .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+    // Italic, but do not match bold markup
+    .replace(/(^|[^*])\*([^*]+?)\*(?!\*)/g, '$1<em>$2</em>');
 }
 
 function getPostData(slug: string): PostData | null {
