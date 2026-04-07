@@ -1,4 +1,5 @@
 import Image from 'next/image';
+import Link from 'next/link';
 import content from '../content/homepage.json';
 
 type Pillar = {
@@ -61,9 +62,12 @@ export default function Home() {
           <a href="#email" className="bg-black text-white text-sm font-medium px-5 py-2.5 rounded-lg">
             Follow the journey
           </a>
-          <a href="/about" className="text-slate-700 text-sm px-5 py-2.5 rounded-lg border border-slate-200 hover:bg-slate-100 transition">
+          <Link href="/about" className="text-slate-700 text-sm px-5 py-2.5 rounded-lg border border-slate-200 hover:bg-slate-100 transition">
             My story
-          </a>
+          </Link>
+          <Link href="/blogs" className="text-slate-700 text-sm px-5 py-2.5 rounded-lg border border-slate-200 hover:bg-slate-100 transition">
+            Blog
+          </Link>
         </div>
       </section>
 
